@@ -1,0 +1,907 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+  <head>
+    <title>Exploratory Data Visualization for Longitudinal Data</title>
+    <meta charset="utf-8" />
+    <meta name="author" content="Christian Testa  ctesta@hsph.harvard.edu  @_christiantesta" />
+    <script src="libs/header-attrs-2.1/header-attrs.js"></script>
+    <link href="libs/remark-css-0.0.1/default.css" rel="stylesheet" />
+    <link href="libs/remark-css-0.0.1/default-fonts.css" rel="stylesheet" />
+    <link href="libs/font-awesome-5.3.1/css/fontawesome-all.min.css" rel="stylesheet" />
+  </head>
+  <body>
+    <textarea id="source">
+
+name: xaringan-title
+class: left, middle, inverse
+background-color: '#BBB'
+background-size: cover
+
+&lt;style type="text/css"&gt;
+.remark-code-line-highlighted { background-color: rgba(97, 172, 240, .5) !important; }
+
+.huge { /*Change made here*/
+  font-size: 125% !important;
+}
+
+
+.tiny { /*Change made here*/
+  font-size: 50% !important;
+}
+&lt;/style&gt;
+
+
+# Exploratory Data Visualization for Longitudinal Data
+
+&lt;div style='font-size: 25px;'&gt;
+
+Christian Testa &lt;br&gt;
+&lt;a href='mailto:ctesta@hsph.harvard.edu'&gt;<i class="fas  fa-envelope "></i> ctesta@hsph.harvard.edu&lt;/a&gt; &lt;br&gt;
+&lt;a style='color: #55acee;' href='https://twitter.com/_christiantesta'&gt;<i class="fab  fa-twitter "></i> @_christiantesta&lt;/a&gt; &lt;br&gt;
+&lt;a style='color: #636e72;' href='https://github.com/ctesta01'&gt;<i class="fab  fa-github "></i> ctesta01&lt;/a&gt; &lt;br&gt; &lt;br&gt;
+
+October 30th, 2020
+&lt;/div&gt;
+  
+
+
+
+
+---
+# A Quote 
+
+.pull-left[
+"The greatest value of a picture is when it forces us to notice what we never expected to see." –John Tukey
+]
+
+.pull-right[
+&lt;img src='images/Snowman.jpg' height='400px'&gt;
+]
+
+---
+# Aims
+
+- Learn how to use data manipulation tools such as `dplyr` and `tidyr`
+- Learn how to use `ggplot2`, a powerful, flexible framework for visualizing data in R
+- Learn where to find more resources
+  
+&lt;img src='images/R-for-Data-Science.jpg'/&gt;
+
+---
+# Before we get started
+
+There are some packages you'll want to make sure you have installed.
+
+
+```r
+install.packages("tidyverse")
+```
+
+
+
+```r
+library(tidyverse, quietly = F, warn.conflicts = T)
+```
+
+```
+## ── Attaching packages ─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────── tidyverse 1.3.0 ──
+```
+
+```
+## ✓ ggplot2 3.3.2     ✓ purrr   0.3.4
+## ✓ tibble  3.0.1     ✓ dplyr   1.0.0
+## ✓ tidyr   1.0.2     ✓ stringr 1.4.0
+## ✓ readr   1.3.1     ✓ forcats 0.5.0
+```
+
+```
+## ── Conflicts ────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────── tidyverse_conflicts() ──
+## x dplyr::filter() masks stats::filter()
+## x dplyr::lag()    masks stats::lag()
+```
+
+---
+# Example Data Set
+
+
+```r
+df &lt;- readr::read_csv("example_data/example_dataset_1.csv")
+```
+
+```
+## Parsed with column specification:
+## cols(
+##   group = col_character(),
+##   gender = col_character(),
+##   X2005 = col_double(),
+##   X2010 = col_double(),
+##   X2015 = col_double(),
+##   X2020 = col_double()
+## )
+```
+
+--
+
+Why use `readr::read_csv`?
+- Reports on the assumed column types, with options to override
+- Loads faster
+- Loads into a tibble, which are faster, better data.frames.
+  
+---
+# Check out the data
+
+
+```r
+knitr::kable(head(df,4))
+```
+
+&lt;table&gt;
+ &lt;thead&gt;
+  &lt;tr&gt;
+   &lt;th style="text-align:left;"&gt; group &lt;/th&gt;
+   &lt;th style="text-align:left;"&gt; gender &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; X2005 &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; X2010 &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; X2015 &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; X2020 &lt;/th&gt;
+  &lt;/tr&gt;
+ &lt;/thead&gt;
+&lt;tbody&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; A &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; F &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 7.175620 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 3.189541 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 7.764503 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 11.815944 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; A &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; M &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 12.785427 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 17.214575 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 23.837714 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 24.246159 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; A &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; F &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 8.226914 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 7.942043 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 12.037638 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 9.473932 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; A &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; M &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 23.640629 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 20.844094 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 27.734866 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 28.543178 &lt;/td&gt;
+  &lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+
+Note that: 
+- Data is in a wide format
+- Column names need cleaning
+- We have groups of participants
+
+---
+# Examine the categorical variables
+
+Let's check what those groups are:
+
+
+```r
+unique(df$group)
+```
+
+```
+## [1] "A" "B" "C" "D"
+```
+
+--
+
+```r
+table(df$gender) 
+```
+
+```
+## 
+##   F   M 
+## 200 200
+```
+
+---
+# Summarize quantitative variables
+--
+
+```r
+df %&gt;% select(-c(group, gender)) %&gt;% 
+  summary()
+```
+
+```
+##      X2005            X2010            X2015           X2020       
+##  Min.   : 0.000   Min.   : 0.000   Min.   : 0.00   Min.   : 0.000  
+##  1st Qu.: 4.745   1st Qu.: 6.759   1st Qu.: 5.73   1st Qu.: 7.881  
+##  Median : 9.246   Median :10.384   Median :10.13   Median :12.077  
+##  Mean   :10.177   Mean   :11.793   Mean   :11.41   Mean   :13.438  
+##  3rd Qu.:13.219   3rd Qu.:15.726   3rd Qu.:15.27   3rd Qu.:18.482  
+##  Max.   :57.049   Max.   :52.639   Max.   :48.23   Max.   :52.452
+```
+--
+... Let's break this one down.
+
+---
+
+&lt;img src="images/MagrittrPipe.png" align='right' width='20%'
+  style='padding: 50px;'&gt;
+  
+
+# Intro to `%&gt;%` and dplyr
+
+
+```r
+df %&gt;% select(-c(group, gender)) %&gt;% 
+  summary()
+```
+
+
+`%&gt;%`, the pipe operator, comes from the `magrittr` package, but is also included 
+in `dplyr`.
+
+
+--
+`x %&gt;% f()` is equivalent to `f(x)` &lt;br&gt;
+`x %&gt;% f(y)` is equivalent to `f(x,y)` 
+
+
+--
+`df %&gt;% select(-c(group, gender))` is equivalent to &lt;br&gt;`select(df, -c(group, gender))`
+
+
+--
+Read `x %&gt;% f(y)` as "`x` gets passed to `f` with additional 
+argument `y`."
+
+
+--
+Using pipes helps to:
+  1. chain several commands together,
+  2. without creating unnecessarily nested one-liners, e.g. &lt;br&gt;
+  `summary(select(df, -group))`
+
+---
+# What's the deal with select?
+
+
+```r
+df %&gt;% select(-c(group, gender)) %&gt;% 
+  summary()
+```
+
+`select` is the command for subsetting the columns of a data.frame or 
+tibble.
+
+
+--
+Notice that `group` and `gender` are not in quotes. This is because `dplyr` and
+many of the functions in the tidyverse use tidy-evaluation, which allows users
+to reference column names of data.frames and tibbles as if they are variables
+within tidyverse functions.
+
+
+--
+The minus sign is saying that we want to remove group and gender, or
+equivalently to select all of the columns except for group and gender.
+
+
+
+```
+##      X2005            X2010            X2015           X2020       
+##  Min.   : 0.000   Min.   : 0.000   Min.   : 0.00   Min.   : 0.000  
+##  1st Qu.: 4.745   1st Qu.: 6.759   1st Qu.: 5.73   1st Qu.: 7.881  
+##  Median : 9.246   Median :10.384   Median :10.13   Median :12.077  
+##  Mean   :10.177   Mean   :11.793   Mean   :11.41   Mean   :13.438  
+##  3rd Qu.:13.219   3rd Qu.:15.726   3rd Qu.:15.27   3rd Qu.:18.482  
+##  Max.   :57.049   Max.   :52.639   Max.   :48.23   Max.   :52.452
+```
+
+---
+# Let's add participant ID numbers
+
+
+```r
+df &lt;- df %&gt;% 
+  mutate(id = 1:nrow(.)) %&gt;% 
+  select(id, everything())
+
+knitr::kable(head(df,3))
+```
+
+&lt;table&gt;
+ &lt;thead&gt;
+  &lt;tr&gt;
+   &lt;th style="text-align:right;"&gt; id &lt;/th&gt;
+   &lt;th style="text-align:left;"&gt; group &lt;/th&gt;
+   &lt;th style="text-align:left;"&gt; gender &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; X2005 &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; X2010 &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; X2015 &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; X2020 &lt;/th&gt;
+  &lt;/tr&gt;
+ &lt;/thead&gt;
+&lt;tbody&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:right;"&gt; 1 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; A &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; F &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 7.175620 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 3.189541 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 7.764503 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 11.815944 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:right;"&gt; 2 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; A &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; M &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 12.785427 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 17.214575 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 23.837714 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 24.246159 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:right;"&gt; 3 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; A &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; F &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 8.226914 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 7.942043 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 12.037638 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 9.473932 &lt;/td&gt;
+  &lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+
+
+--
+Note the use of `.` here, which refers to the argument 
+passed using `%&gt;%`. 
+
+
+--
+Equivalently, we could have written `mutate(df, id = 1:nrow(df))`.
+
+
+--
+`everything()` is part of the `tidyselect` package and system which 
+helps with the programmatic selection of columns and offers other 
+helpful functions like `starts_with` or `contains`.
+
+
+---
+
+# Let's convert to a tidy format
+
+
+```r
+df &lt;- df %&gt;% tidyr::pivot_longer(
+  cols = starts_with('X'),
+  names_to = 'year')
+
+knitr::kable(head(df, 4))
+```
+
+&lt;table&gt;
+ &lt;thead&gt;
+  &lt;tr&gt;
+   &lt;th style="text-align:right;"&gt; id &lt;/th&gt;
+   &lt;th style="text-align:left;"&gt; group &lt;/th&gt;
+   &lt;th style="text-align:left;"&gt; gender &lt;/th&gt;
+   &lt;th style="text-align:left;"&gt; year &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; value &lt;/th&gt;
+  &lt;/tr&gt;
+ &lt;/thead&gt;
+&lt;tbody&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:right;"&gt; 1 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; A &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; F &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; X2005 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 7.175620 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:right;"&gt; 1 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; A &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; F &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; X2010 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 3.189541 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:right;"&gt; 1 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; A &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; F &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; X2015 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 7.764503 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:right;"&gt; 1 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; A &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; F &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; X2020 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 11.815944 &lt;/td&gt;
+  &lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+
+---
+# Get rid of "X"
+
+
+```r
+df &lt;- df %&gt;% 
+  mutate(year = stringr::str_remove(year, "X"))
+
+knitr::kable(head(df, 4))
+```
+
+&lt;table&gt;
+ &lt;thead&gt;
+  &lt;tr&gt;
+   &lt;th style="text-align:right;"&gt; id &lt;/th&gt;
+   &lt;th style="text-align:left;"&gt; group &lt;/th&gt;
+   &lt;th style="text-align:left;"&gt; gender &lt;/th&gt;
+   &lt;th style="text-align:left;"&gt; year &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; value &lt;/th&gt;
+  &lt;/tr&gt;
+ &lt;/thead&gt;
+&lt;tbody&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:right;"&gt; 1 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; A &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; F &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 2005 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 7.175620 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:right;"&gt; 1 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; A &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; F &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 2010 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 3.189541 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:right;"&gt; 1 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; A &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; F &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 2015 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 7.764503 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:right;"&gt; 1 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; A &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; F &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 2020 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 11.815944 &lt;/td&gt;
+  &lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+
+---
+# Now we can do some plotting 
+
+.pull-left[
+
+```r
+ggplot(data = df,  
+ aes(x = year, y = value)) + 
+   geom_point()
+```
+
+]
+
+.pull-right[
+&lt;img src="longitudinal_eda_files/figure-html/unnamed-chunk-17-1.png" width="100%" /&gt;
+]
+
+---
+# Now let's try geom_line
+
+.pull-left[
+
+```r
+ggplot(data = df,  
+ aes(x = year, y = value,
+*    group = id)) +
+   geom_line()
+```
+
+]
+
+.pull-right[
+&lt;img src="longitudinal_eda_files/figure-html/unnamed-chunk-18-1.png" width="100%" /&gt;
+]
+
+---
+# Adding color
+
+.pull-left[
+
+```r
+ggplot(data = df,  
+ aes(x = year, y = value,
+     group = id,
+*    color = group)) +
+*  geom_line(alpha=0.5)
+```
+
+]
+
+.pull-right[
+&lt;img src="longitudinal_eda_files/figure-html/unnamed-chunk-19-1.png" width="100%" /&gt;
+]
+
+---
+# Facet Wrapping
+
+.tiny[
+
+```r
+ggplot(data = df,  aes(x = year, y = value, group = id, color = group)) +
+  geom_line(alpha=0.5) + 
+* facet_wrap(~group)
+```
+]
+
+&lt;img src="longitudinal_eda_files/figure-html/unnamed-chunk-20-1.png" width="576" height="100%" style="display: block; margin: auto;" /&gt;
+
+---
+# Facet Grid
+
+.tiny[
+
+```r
+ggplot(data = df,  aes(x = year, y = value, group = id, color = group)) +
+  geom_line(alpha=0.5) + 
+* facet_grid(gender~group) +
+  ggtitle("Different groups had different trajectories")
+```
+]
+
+&lt;img src="longitudinal_eda_files/figure-html/unnamed-chunk-21-1.png" width="576" height="100%" style="display: block; margin: auto;" /&gt;
+
+
+---
+# Using Stat Summaries
+
+.tiny[
+
+```r
+ggplot(data = df,  aes(x = year, y = value, group = id, color = gender)) +
+  geom_line(alpha=0.5) + 
+  facet_wrap(~group) + 
+  stat_summary(aes(group = interaction(group, gender)), fun = mean, geom='line', color = 'black') + 
+  stat_summary(aes(group = interaction(group, gender), shape=gender), fun = mean, geom='point', size=2, color = 'black') + 
+  labs(shape = 'Gender and Group\nLevel Average', color = 'Gender') +
+  ggtitle("Men have higher values than women")
+```
+]
+
+&lt;img src="longitudinal_eda_files/figure-html/unnamed-chunk-22-1.png" width="576" height="100%" style="display: block; margin: auto;" /&gt;
+
+---
+# Another way using boxplots
+
+.tiny[
+
+```r
+ggplot(data = df,  aes(x = year, y = value, color = gender)) +
+  geom_boxplot(alpha=0.5) + 
+  stat_summary(aes(group = interaction(group, gender), shape=''), position = position_dodge(width=0.75), 
+               fun = mean, geom='point', color = 'grey10', alpha=0.8) +
+  facet_wrap(~group) + 
+  labs(color = "Gender", shape = "Gender + Group\nLevel Average") + 
+  ggtitle("Men often had greater variance than women")
+```
+]
+
+
+&lt;img src="longitudinal_eda_files/figure-html/unnamed-chunk-23-1.png" width="576" height="100%" style="display: block; margin: auto;" /&gt;
+
+---
+# Using `geom_ribbon`
+
+.tiny[
+
+```r
+df %&gt;% group_by(group, gender, year) %&gt;%
+  summarize(
+    ci_high = quantile(value, 0.975),
+    ci_low = quantile(value, 0.025),
+    mean = mean(value),
+    .groups = 'keep') %&gt;%
+  
+  ggplot(aes(x = year, y = mean, ymax = ci_high, 
+       ymin = ci_low, group = gender, fill = gender)) +
+    geom_ribbon(alpha=0.5) +
+    geom_line(aes(linetype='')) +
+    facet_wrap(~group) + 
+    labs(linetype = 'Gender+Group\nLevel Average', 
+      fill = 'Gender', y = 'value') + 
+    ggtitle(paste0("The difference between men and women ",
+      "was consistent over time"))
+```
+]
+
+&lt;img src="longitudinal_eda_files/figure-html/unnamed-chunk-24-1.png" width="432" height="100%" style="display: block; margin: auto;" /&gt;
+
+---
+# Widening Data for Correlation Analysis
+
+Before we can look at correlation across the years, we need 
+to widen the dataframe (similar to how it was originally formatted).
+
+
+```r
+df_wide &lt;- df %&gt;% 
+  tidyr::pivot_wider(id_cols = -value, names_from = year, values_from = value)
+knitr::kable(head(df_wide, 3))
+```
+
+&lt;table&gt;
+ &lt;thead&gt;
+  &lt;tr&gt;
+   &lt;th style="text-align:right;"&gt; id &lt;/th&gt;
+   &lt;th style="text-align:left;"&gt; group &lt;/th&gt;
+   &lt;th style="text-align:left;"&gt; gender &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; 2005 &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; 2010 &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; 2015 &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; 2020 &lt;/th&gt;
+  &lt;/tr&gt;
+ &lt;/thead&gt;
+&lt;tbody&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:right;"&gt; 1 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; A &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; F &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 7.175620 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 3.189541 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 7.764503 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 11.815944 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:right;"&gt; 2 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; A &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; M &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 12.785427 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 17.214575 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 23.837714 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 24.246159 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:right;"&gt; 3 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; A &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; F &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 8.226914 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 7.942043 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 12.037638 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 9.473932 &lt;/td&gt;
+  &lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+
+---
+# Correlation Plot
+
+.tiny[
+
+```r
+# install.packages(GGally)
+library(GGally)
+ggpairs(df_wide, aes(color = group, alpha=0.25), columns = c('2005', '2010', '2015', '2020'), progress=F)
+```
+]
+
+&lt;img src="longitudinal_eda_files/figure-html/unnamed-chunk-26-1.png" width="576" height="100%" style="display: block; margin: auto;" /&gt;
+
+---
+# Bivariate Pairs Plots
+
+
+```r
+ggbivariate(df, outcome = 'gender', explanatory = 'group') + 
+  theme(legend.position = 'bottom') + 
+  ggtitle("Groups were about evenly split across gender")
+```
+
+&lt;img src="longitudinal_eda_files/figure-html/unnamed-chunk-27-1.png" width="432" height="100%" style="display: block; margin: auto;" /&gt;
+
+---
+&lt;img src="images/tt_logo.png" align='right' width='30%'
+  style='padding: 0px;'&gt;
+
+# Where you can learn more 
+
+  
+For data manipulation and visualization:
+
+&lt;img src="images/ggplot2-cheatsheet.png" align='right' width='30%'
+  style='padding: 0px;'&gt;
+  
+- R for Data Science, by Garrett Grolemund and Hadley Wickham, [r4ds.had.co.nz](https://r4ds.had.co.nz)
+- The ggplot2 Website, [ggplot2.tidyverse.org](https://ggplot2.tidyverse.org)
+- The [RStudio Cheatsheets](https://rstudio.com/resources/cheatsheets/) (I suggest starting with [dplyr](https://github.com/rstudio/cheatsheets/raw/master/data-transformation.pdf) and [ggplot2](https://github.com/rstudio/cheatsheets/raw/master/data-visualization-2.1.pdf))
+- Watch the [TidyTuesday tutorials on YouTube](https://www.youtube.com/results?search_query=tidytuesday) or check out [TidyTuesday 
+  on GitHub](https://github.com/rfordatascience/tidytuesday/)
+  
+  
+  
+--
+For longitudinal data analysis: 
+- [Applied Longitudinal Analysis by Garrett Fitzmaurice, Nan Laird, and James Ware](https://content.sph.harvard.edu/fitzmaur/ala2e/)
+- [Marie Davidian's Slides on Modeling and Analysis of Longitudinal Data](https://www4.stat.ncsu.edu/~davidian/enar06_handout.pdf)
+- [Patrick Hagearty's notes on Longitudinal Data Analysis](https://faculty.washington.edu/heagerty/Courses/VA-longitudinal/private/LDAchapter.pdf) (fairly technical)
+- Longitudinal Data Analysis: Autoregressive Linear Mixed Effects Models, by Ikuko FunatogawaTakashi Funatogawa (very technical)
+
+---
+# How to take your longitudinal analysis further
+
+.pull-left[
+&lt;!-- &lt;div style='font-size: 75% !important;'&gt; --&gt;
+&lt;ul&gt;
+Use models to make inferences about your data. Models for longitudinal data
+often include the following features: &lt;br&gt; &lt;br&gt;
+&lt;li&gt; Multi-level or random effects design&lt;/li&gt;
+&lt;li&gt; Generalized Linear Models&lt;/li&gt;
+&lt;li&gt; Auto-regressive&lt;/li&gt;
+&lt;li&gt; Treatment of missing data&lt;/li&gt;
+&lt;/ul&gt;
+&lt;!-- &lt;/div&gt; --&gt;
+]
+
+.pull-right[
+&lt;img src='images/multilevel-reaction.png'/&gt;
+]
+
+
+&lt;!-- ![A fit multilevel model of reaction times in a sleep deprivation study](images/multilevel-reaction.png)--&gt;
+
+---
+# Image Credits
+
+&lt;div style='font-size:small'&gt;
+
+&lt;ul&gt;
+&lt;li&gt;R for Data Science: https://www.dataoptimal.com/wp-content/uploads/R-for-Data-Science.jpg &lt;/li&gt;
+&lt;li&gt;Magrittr Logo: https://magrittr.tidyverse.org/logo.png&lt;/li&gt;
+&lt;li&gt;Snowy Boston: https://cdn10.bostonmagazine.com/wp-content/uploads/sites/2/2017/10/winterweather.jpg&lt;/li&gt;
+&lt;li&gt;Tidy Tuesday Logo: https://github.com/rfordatascience/tidytuesday/&lt;/li&gt;
+
+
+&lt;/ul&gt;
+  
+&lt;/div&gt;
+    </textarea>
+<style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
+<script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+<script>var slideshow = remark.create({
+"highlightStyle": "github",
+"highlightLines": true
+});
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function(d) {
+  var s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})(document);
+
+(function(d) {
+  var el = d.getElementsByClassName("remark-slides-area");
+  if (!el) return;
+  var slide, slides = slideshow.getSlides(), els = el[0].children;
+  for (var i = 1; i < slides.length; i++) {
+    slide = slides[i];
+    if (slide.properties.continued === "true" || slide.properties.count === "false") {
+      els[i - 1].className += ' has-continuation';
+    }
+  }
+  var s = d.createElement("style");
+  s.type = "text/css"; s.innerHTML = "@media print { .has-continuation { display: none; } }";
+  d.head.appendChild(s);
+})(document);
+// delete the temporary CSS (for displaying all slides initially) when the user
+// starts to view slides
+(function() {
+  var deleted = false;
+  slideshow.on('beforeShowSlide', function(slide) {
+    if (deleted) return;
+    var sheets = document.styleSheets, node;
+    for (var i = 0; i < sheets.length; i++) {
+      node = sheets[i].ownerNode;
+      if (node.dataset["target"] !== "print-only") continue;
+      node.parentNode.removeChild(node);
+    }
+    deleted = true;
+  });
+})();
+(function() {
+  "use strict"
+  // Replace <script> tags in slides area to make them executable
+  var scripts = document.querySelectorAll(
+    '.remark-slides-area .remark-slide-container script'
+  );
+  if (!scripts.length) return;
+  for (var i = 0; i < scripts.length; i++) {
+    var s = document.createElement('script');
+    var code = document.createTextNode(scripts[i].textContent);
+    s.appendChild(code);
+    var scriptAttrs = scripts[i].attributes;
+    for (var j = 0; j < scriptAttrs.length; j++) {
+      s.setAttribute(scriptAttrs[j].name, scriptAttrs[j].value);
+    }
+    scripts[i].parentElement.replaceChild(s, scripts[i]);
+  }
+})();
+(function() {
+  var links = document.getElementsByTagName('a');
+  for (var i = 0; i < links.length; i++) {
+    if (/^(https?:)?\/\//.test(links[i].getAttribute('href'))) {
+      links[i].target = '_blank';
+    }
+  }
+})();
+// adds .remark-code-has-line-highlighted class to <pre> parent elements
+// of code chunks containing highlighted lines with class .remark-code-line-highlighted
+(function(d) {
+  const hlines = d.querySelectorAll('.remark-code-line-highlighted');
+  const preParents = [];
+  const findPreParent = function(line, p = 0) {
+    if (p > 1) return null; // traverse up no further than grandparent
+    const el = line.parentElement;
+    return el.tagName === "PRE" ? el : findPreParent(el, ++p);
+  };
+
+  for (let line of hlines) {
+    let pre = findPreParent(line);
+    if (pre && !preParents.includes(pre)) preParents.push(pre);
+  }
+  preParents.forEach(p => p.classList.add("remark-code-has-line-highlighted"));
+})(document);</script>
+
+<script>
+slideshow._releaseMath = function(el) {
+  var i, text, code, codes = el.getElementsByTagName('code');
+  for (i = 0; i < codes.length;) {
+    code = codes[i];
+    if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+      text = code.textContent;
+      if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
+          /^\$\$(.|\s)+\$\$$/.test(text) ||
+          /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+        code.outerHTML = code.innerHTML;  // remove <code></code>
+        continue;
+      }
+    }
+    i++;
+  }
+};
+slideshow._releaseMath(document);
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>

@@ -1,0 +1,6 @@
+**Rproj
+**Rhistory
+libs/**
+*files/**
+*cache/**
+.Rproj.user/**
