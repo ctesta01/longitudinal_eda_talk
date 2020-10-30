@@ -20,12 +20,12 @@ background-size: cover
 ```{css, echo = FALSE}
 .remark-code-line-highlighted { background-color: rgba(97, 172, 240, .5) !important; }
 
-.huge { /*Change made here*/
+.huge .remark-code { /*Change made here*/
   font-size: 125% !important;
 }
 
 
-.tiny { /*Change made here*/
+.tiny .remark-code { /*Change made here*/
   font-size: 50% !important;
 }
 ```
@@ -492,6 +492,12 @@ often include the following features: <br> <br>
 <img src='images/multilevel-reaction.png'/>
 ]
 
+---
+# Find this talk and the example data on my github
+
+<https://github.com/ctesta01/longitudinal_eda_talk>
+
+<img src='images/github_repo.png' height='350px' />
 
 <!-- ![A fit multilevel model of reaction times in a sleep deprivation study](images/multilevel-reaction.png)-->
 
