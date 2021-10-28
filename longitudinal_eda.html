@@ -602,7 +602,7 @@ ggplot(data = df,  aes(x = year, y = score, color = gender)) +
                fun = mean, geom='point', color = 'grey10', alpha=0.8) +
   facet_wrap(~strata) + 
   labs(color = "Gender", shape = "Gender + Strata\nLevel Average") + 
-  ggtitle("Men often had greater variance than women")
+  ggtitle("Boxplots allow us to see the interquartile range clearly")
 ```
 ]
 
@@ -645,7 +645,9 @@ to widen the dataframe (similar to how it was originally formatted).
 
 ```r
 df_wide &lt;- df %&gt;% 
-  tidyr::pivot_wider(id_cols = -score, names_from = year, values_from = score)
+  tidyr::pivot_wider(id_cols = -score,
+                     names_from = year,
+                     values_from = score)
 knitr::kable(head(df_wide, 3))
 ```
 
