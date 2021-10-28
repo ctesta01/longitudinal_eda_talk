@@ -1,7 +1,7 @@
 # Make Example Dataset 1
 # 
 # Christian Testa
-# October 30 2020
+# October 28 2021
 # 
 # For use as an example in a talk on visualizing longitudinal data analysis.
 
@@ -125,7 +125,7 @@ cohort_4_2020 <- roughly_decline(cohort_4_2015)
 ################
 
 df <- data.frame(
-  group = rep(cohorts, each = N / n_cohorts),
+  strata = rep(cohorts, each = N / n_cohorts),
   gender = c('M', 'F')[rbinom(n = N, size = 1, prob = 0.5)+1],
   `2005` = c(cohort_1_2005, cohort_2_2005, cohort_3_2005, cohort_4_2005),
   `2010` = c(cohort_1_2010, cohort_2_2010, cohort_3_2010, cohort_4_2010),

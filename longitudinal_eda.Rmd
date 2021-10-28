@@ -3,7 +3,7 @@ title: "Exploratory Data Visualization for Longitudinal Data"
 author: "Christian Testa <br>\
   ctesta@hsph.harvard.edu <br>\
   <a style='color: #55acee;' href='https://twitter.com/_christiantesta'>@_christiantesta</a>"
-date: "October 30 2020"
+date: "October 29 2021"
 output:
   xaringan::moon_reader:
     lib_dir: libs
@@ -36,11 +36,11 @@ background-size: cover
 <div style='font-size: 25px;'>
 
 Christian Testa <br>
-<a href='mailto:ctesta@hsph.harvard.edu'>`r icon::fa('envelope')` ctesta@hsph.harvard.edu</a> <br>
-<a style='color: #55acee;' href='https://twitter.com/_christiantesta'>`r icon::fa("twitter")` @_christiantesta</a> <br>
-<a style='color: #636e72;' href='https://github.com/ctesta01'>`r icon::fa("github")` ctesta01</a> <br> <br>
+<a href='mailto:ctesta@hsph.harvard.edu'>`r icons::icon_style(icons::fontawesome('envelope'), fill='#F92672')` ctesta@hsph.harvard.edu</a> <br>
+<a style='color: #55acee;' href='https://twitter.com/_christiantesta'>`r icons::icon_style(icons::fontawesome("twitter"), fill='#55acee')` @_christiantesta</a> <br>
+<a style='color: #636e72;' href='https://github.com/ctesta01'>`r icons::icon_style(icons::fontawesome("github"), fill='#636e72')` ctesta01</a> <br> <br>
 
-October 30th, 2020
+October 29th, 2021
 </div>
   
 ```{r echo=F, warning=F, message=F}
@@ -125,7 +125,7 @@ Note that:
 Let's check what those groups are:
 
 ```{r}
-unique(df$group)
+unique(df$strata)
 ```
 
 --
@@ -137,7 +137,7 @@ table(df$gender)
 # Summarize quantitative variables
 --
 ```{r}
-df %>% select(-c(group, gender)) %>% 
+df %>% select(-c(strata, gender)) %>% 
   summary()
 ```
 --
@@ -152,7 +152,7 @@ df %>% select(-c(group, gender)) %>%
 # Intro to `%>%` and dplyr
 
 ```{r eval=F}
-df %>% select(-c(group, gender)) %>% 
+df %>% select(-c(strata, gender)) %>% 
   summary()
 ```
 
@@ -167,7 +167,7 @@ in `dplyr`.
 
 
 --
-`df %>% select(-c(group, gender))` is equivalent to <br>`select(df, -c(group, gender))`
+`df %>% select(-c(strata, gender))` is equivalent to <br>`select(df, -c(strata, gender))`
 
 
 --
@@ -179,13 +179,13 @@ argument `y`."
 Using pipes helps to:
   1. chain several commands together,
   2. without creating unnecessarily nested one-liners, e.g. <br>
-  `summary(select(df, -group))`
+  `summary(select(df, -strata))`
 
 ---
 # What's the deal with select?
 
 ```{r eval=F}
-df %>% select(-c(group, gender)) %>% 
+df %>% select(-c(strata, gender)) %>% 
   summary()
 ```
 
@@ -194,19 +194,19 @@ tibble.
 
 
 --
-Notice that `group` and `gender` are not in quotes. This is because `dplyr` and
+Notice that `strata` and `gender` are not in quotes. This is because `dplyr` and
 many of the functions in the tidyverse use tidy-evaluation, which allows users
 to reference column names of data.frames and tibbles as if they are variables
 within tidyverse functions.
 
 
 --
-The minus sign is saying that we want to remove group and gender, or
-equivalently to select all of the columns except for group and gender.
+The minus sign is saying that we want to remove strata and gender, or
+equivalently to select all of the columns except for strata and gender.
 
 
 ```{r echo=F}
-df %>% select(-c(group, gender)) %>% 
+df %>% select(-c(strata, gender)) %>% 
   summary()
 ```
 
@@ -244,7 +244,8 @@ helpful functions like `starts_with` or `contains`.
 ```{r}
 df <- df %>% tidyr::pivot_longer(
   cols = starts_with('X'),
-  names_to = 'year')
+  names_to = 'year',
+  values_to = 'score')
 
 knitr::kable(head(df, 4))
 ```
@@ -265,7 +266,7 @@ knitr::kable(head(df, 4))
 .pull-left[
 ```{r ggplot-point, fig.show='hide'}
 ggplot(data = df,  
- aes(x = year, y = value)) + 
+ aes(x = year, y = score)) + 
    geom_point()
 ```
 
@@ -282,7 +283,7 @@ ggplot(data = df,
 .pull-left[
 ```{r ggplot-line, fig.show='hide'}
 ggplot(data = df,  
- aes(x = year, y = value,
+ aes(x = year, y = score,
      group = id)) + #<<
    geom_line()
 ```
@@ -300,9 +301,9 @@ ggplot(data = df,
 .pull-left[
 ```{r ggplot-line+color, fig.show='hide'}
 ggplot(data = df,  
- aes(x = year, y = value,
+ aes(x = year, y = score,
      group = id,
-     color = group)) + #<<
+     color = strata)) + #<<
    geom_line(alpha=0.5) #<<
 ```
 
@@ -318,9 +319,9 @@ ggplot(data = df,
 
 .tiny[
 ```{r ggplot-line+color+facetwrap, fig.show='hide'}
-ggplot(data = df,  aes(x = year, y = value, group = id, color = group)) +
+ggplot(data = df,  aes(x = year, y = score, group = id, color = strata)) +
   geom_line(alpha=0.5) + 
-  facet_wrap(~group) #<<
+  facet_wrap(~strata) #<<
 ```
 ]
 
@@ -332,10 +333,10 @@ ggplot(data = df,  aes(x = year, y = value, group = id, color = group)) +
 
 .tiny[
 ```{r ggplot-line+color+facetgrid, fig.show='hide'}
-ggplot(data = df,  aes(x = year, y = value, group = id, color = group)) +
+ggplot(data = df,  aes(x = year, y = score, group = id, color = strata)) +
   geom_line(alpha=0.5) + 
-  facet_grid(gender~group) + #<<
-  ggtitle("Different groups had different trajectories")
+  facet_grid(gender~strata) + #<<
+  ggtitle("Different strata had different trajectories")
 ```
 ]
 
@@ -348,13 +349,13 @@ ggplot(data = df,  aes(x = year, y = value, group = id, color = group)) +
 
 .tiny[
 ```{r ggplot-line+statsum+facetwrap, fig.show='hide'}
-ggplot(data = df,  aes(x = year, y = value, group = id, color = gender)) +
+ggplot(data = df,  aes(x = year, y = score, group = id, color = gender)) +
   geom_line(alpha=0.5) + 
-  facet_wrap(~group) + 
-  stat_summary(aes(group = interaction(group, gender)), fun = mean, geom='line', color = 'black') + 
-  stat_summary(aes(group = interaction(group, gender), shape=gender), fun = mean, geom='point', size=2, color = 'black') + 
-  labs(shape = 'Gender and Group\nLevel Average', color = 'Gender') +
-  ggtitle("Men have higher values than women")
+  facet_wrap(~strata) + 
+  stat_summary(aes(group = interaction(strata, gender)), fun = mean, geom='line', color = 'black') + 
+  stat_summary(aes(group = interaction(strata, gender), shape=gender), fun = mean, geom='point', size=2, color = 'black') + 
+  labs(shape = 'Gender and Strata\nLevel Average', color = 'Gender') +
+  ggtitle("Men have higher scores than women")
 ```
 ]
 
@@ -366,12 +367,12 @@ ggplot(data = df,  aes(x = year, y = value, group = id, color = gender)) +
 
 .tiny[
 ```{r ggplot-boxplot+statsum, fig.show='hide'}
-ggplot(data = df,  aes(x = year, y = value, color = gender)) +
+ggplot(data = df,  aes(x = year, y = score, color = gender)) +
   geom_boxplot(alpha=0.5) + 
-  stat_summary(aes(group = interaction(group, gender), shape=''), position = position_dodge(width=0.75), 
+  stat_summary(aes(group = interaction(strata, gender), shape=''), position = position_dodge(width=0.75), 
                fun = mean, geom='point', color = 'grey10', alpha=0.8) +
-  facet_wrap(~group) + 
-  labs(color = "Gender", shape = "Gender + Group\nLevel Average") + 
+  facet_wrap(~strata) + 
+  labs(color = "Gender", shape = "Gender + Strata\nLevel Average") + 
   ggtitle("Men often had greater variance than women")
 ```
 ]
@@ -385,20 +386,20 @@ ggplot(data = df,  aes(x = year, y = value, color = gender)) +
 
 .tiny[
 ```{r ggplot-geomribbon, fig.show='hide'}
-df %>% group_by(group, gender, year) %>%
+df %>% group_by(strata, gender, year) %>%
   summarize(
-    ci_high = quantile(value, 0.975),
-    ci_low = quantile(value, 0.025),
-    mean = mean(value),
+    ci_high = quantile(score, 0.975),
+    ci_low = quantile(score, 0.025),
+    mean = mean(score),
     .groups = 'keep') %>%
   
   ggplot(aes(x = year, y = mean, ymax = ci_high, 
        ymin = ci_low, group = gender, fill = gender)) +
     geom_ribbon(alpha=0.5) +
     geom_line(aes(linetype='')) +
-    facet_wrap(~group) + 
-    labs(linetype = 'Gender+Group\nLevel Average', 
-      fill = 'Gender', y = 'value') + 
+    facet_wrap(~strata) + 
+    labs(linetype = 'Gender+Strata\nLevel Average', 
+      fill = 'Gender', y = 'Score') + 
     ggtitle(paste0("The difference between men and women ",
       "was consistent over time"))
 ```
@@ -415,7 +416,7 @@ to widen the dataframe (similar to how it was originally formatted).
 
 ```{r warning=F}
 df_wide <- df %>% 
-  tidyr::pivot_wider(id_cols = -value, names_from = year, values_from = value)
+  tidyr::pivot_wider(id_cols = -score, names_from = year, values_from = score)
 knitr::kable(head(df_wide, 3))
 ```
 
@@ -426,7 +427,7 @@ knitr::kable(head(df_wide, 3))
 ```{r ggally-corplot, warning=F, message=F, fig.show='hide'}
 # install.packages(GGally)
 library(GGally)
-ggpairs(df_wide, aes(color = group, alpha=0.25), columns = c('2005', '2010', '2015', '2020'), progress=F)
+ggpairs(df_wide, aes(color = strata, alpha=0.25), columns = c('2005', '2010', '2015', '2020'), progress=F)
 ```
 ]
 
@@ -437,9 +438,9 @@ ggpairs(df_wide, aes(color = group, alpha=0.25), columns = c('2005', '2010', '20
 # Bivariate Pairs Plots
 
 ```{r ggally-bivariate, warning=F, message=F, fig.show='hide'}
-ggbivariate(df, outcome = 'gender', explanatory = 'group') + 
+ggbivariate(df, outcome = 'gender', explanatory = 'strata') + 
   theme(legend.position = 'bottom') + 
-  ggtitle("Groups were about evenly split across gender")
+  ggtitle("Strata were about evenly split across gender")
 ```
 
 ```{r ref.label = 'ggally-bivariate', echo = FALSE, fig.height=5, fig.width=6, out.height='100%', fig.retina = 6, fig.align='center'}
@@ -509,10 +510,7 @@ often include the following features: <br> <br>
 <ul>
 <li>R for Data Science: https://www.dataoptimal.com/wp-content/uploads/R-for-Data-Science.jpg </li>
 <li>Magrittr Logo: https://magrittr.tidyverse.org/logo.png</li>
-<li>Snowy Boston: https://cdn10.bostonmagazine.com/wp-content/uploads/sites/2/2017/10/winterweather.jpg</li>
 <li>Tidy Tuesday Logo: https://github.com/rfordatascience/tidytuesday/</li>
-
-
 </ul>
   
 </div>

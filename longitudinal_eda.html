@@ -4,10 +4,9 @@
     <title>Exploratory Data Visualization for Longitudinal Data</title>
     <meta charset="utf-8" />
     <meta name="author" content="Christian Testa  ctesta@hsph.harvard.edu  @_christiantesta" />
-    <script src="libs/header-attrs-2.1/header-attrs.js"></script>
+    <script src="libs/header-attrs-2.10/header-attrs.js"></script>
     <link href="libs/remark-css-0.0.1/default.css" rel="stylesheet" />
     <link href="libs/remark-css-0.0.1/default-fonts.css" rel="stylesheet" />
-    <link href="libs/font-awesome-5.3.1/css/fontawesome-all.min.css" rel="stylesheet" />
   </head>
   <body>
     <textarea id="source">
@@ -36,11 +35,11 @@ background-size: cover
 &lt;div style='font-size: 25px;'&gt;
 
 Christian Testa &lt;br&gt;
-&lt;a href='mailto:ctesta@hsph.harvard.edu'&gt;<i class="fas  fa-envelope "></i> ctesta@hsph.harvard.edu&lt;/a&gt; &lt;br&gt;
-&lt;a style='color: #55acee;' href='https://twitter.com/_christiantesta'&gt;<i class="fab  fa-twitter "></i> @_christiantesta&lt;/a&gt; &lt;br&gt;
-&lt;a style='color: #636e72;' href='https://github.com/ctesta01'&gt;<i class="fab  fa-github "></i> ctesta01&lt;/a&gt; &lt;br&gt; &lt;br&gt;
+&lt;a href='mailto:ctesta@hsph.harvard.edu'&gt;&lt;svg viewBox="0 0 512 512" style="height:1em;position:relative;display:inline-block;top:.1em;fill:#F92672;" xmlns="http://www.w3.org/2000/svg"&gt;  &lt;path d="M464 64H48C21.49 64 0 85.49 0 112v288c0 26.51 21.49 48 48 48h416c26.51 0 48-21.49 48-48V112c0-26.51-21.49-48-48-48zm0 48v40.805c-22.422 18.259-58.168 46.651-134.587 106.49-16.841 13.247-50.201 45.072-73.413 44.701-23.208.375-56.579-31.459-73.413-44.701C106.18 199.465 70.425 171.067 48 152.805V112h416zM48 400V214.398c22.914 18.251 55.409 43.862 104.938 82.646 21.857 17.205 60.134 55.186 103.062 54.955 42.717.231 80.509-37.199 103.053-54.947 49.528-38.783 82.032-64.401 104.947-82.653V400H48z"&gt;&lt;/path&gt;&lt;/svg&gt; ctesta@hsph.harvard.edu&lt;/a&gt; &lt;br&gt;
+&lt;a style='color: #55acee;' href='https://twitter.com/_christiantesta'&gt;&lt;svg viewBox="0 0 512 512" style="height:1em;position:relative;display:inline-block;top:.1em;fill:#55acee;" xmlns="http://www.w3.org/2000/svg"&gt;  &lt;path d="M459.37 151.716c.325 4.548.325 9.097.325 13.645 0 138.72-105.583 298.558-298.558 298.558-59.452 0-114.68-17.219-161.137-47.106 8.447.974 16.568 1.299 25.34 1.299 49.055 0 94.213-16.568 130.274-44.832-46.132-.975-84.792-31.188-98.112-72.772 6.498.974 12.995 1.624 19.818 1.624 9.421 0 18.843-1.3 27.614-3.573-48.081-9.747-84.143-51.98-84.143-102.985v-1.299c13.969 7.797 30.214 12.67 47.431 13.319-28.264-18.843-46.781-51.005-46.781-87.391 0-19.492 5.197-37.36 14.294-52.954 51.655 63.675 129.3 105.258 216.365 109.807-1.624-7.797-2.599-15.918-2.599-24.04 0-57.828 46.782-104.934 104.934-104.934 30.213 0 57.502 12.67 76.67 33.137 23.715-4.548 46.456-13.32 66.599-25.34-7.798 24.366-24.366 44.833-46.132 57.827 21.117-2.273 41.584-8.122 60.426-16.243-14.292 20.791-32.161 39.308-52.628 54.253z"&gt;&lt;/path&gt;&lt;/svg&gt; @_christiantesta&lt;/a&gt; &lt;br&gt;
+&lt;a style='color: #636e72;' href='https://github.com/ctesta01'&gt;&lt;svg viewBox="0 0 496 512" style="height:1em;position:relative;display:inline-block;top:.1em;fill:#636e72;" xmlns="http://www.w3.org/2000/svg"&gt;  &lt;path d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6zm-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3zm44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9zM244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8zM97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1zm-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7zm32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1zm-11.4-14.7c-1.6 1-1.6 3.6 0 5.9 1.6 2.3 4.3 3.3 5.6 2.3 1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2z"&gt;&lt;/path&gt;&lt;/svg&gt; ctesta01&lt;/a&gt; &lt;br&gt; &lt;br&gt;
 
-October 30th, 2020
+October 29th, 2021
 &lt;/div&gt;
   
 
@@ -84,18 +83,18 @@ library(tidyverse, quietly = F, warn.conflicts = T)
 ```
 
 ```
-## ── Attaching packages ────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────── tidyverse 1.3.0 ──
+## ── Attaching packages ─────────────────────────────────────── tidyverse 1.3.0 ──
 ```
 
 ```
 ## ✓ ggplot2 3.3.2     ✓ purrr   0.3.4
-## ✓ tibble  3.0.1     ✓ dplyr   1.0.0
-## ✓ tidyr   1.0.2     ✓ stringr 1.4.0
+## ✓ tibble  3.1.0     ✓ dplyr   1.0.4
+## ✓ tidyr   1.1.2     ✓ stringr 1.4.0
 ## ✓ readr   1.3.1     ✓ forcats 0.5.0
 ```
 
 ```
-## ── Conflicts ───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────── tidyverse_conflicts() ──
+## ── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
 ## x dplyr::filter() masks stats::filter()
 ## x dplyr::lag()    masks stats::lag()
 ```
@@ -111,7 +110,7 @@ df &lt;- readr::read_csv("example_data/example_dataset_1.csv")
 ```
 ## Parsed with column specification:
 ## cols(
-##   group = col_character(),
+##   strata = col_character(),
 ##   gender = col_character(),
 ##   X2005 = col_double(),
 ##   X2010 = col_double(),
@@ -138,7 +137,7 @@ knitr::kable(head(df,4))
 &lt;table&gt;
  &lt;thead&gt;
   &lt;tr&gt;
-   &lt;th style="text-align:left;"&gt; group &lt;/th&gt;
+   &lt;th style="text-align:left;"&gt; strata &lt;/th&gt;
    &lt;th style="text-align:left;"&gt; gender &lt;/th&gt;
    &lt;th style="text-align:right;"&gt; X2005 &lt;/th&gt;
    &lt;th style="text-align:right;"&gt; X2010 &lt;/th&gt;
@@ -149,35 +148,35 @@ knitr::kable(head(df,4))
 &lt;tbody&gt;
   &lt;tr&gt;
    &lt;td style="text-align:left;"&gt; A &lt;/td&gt;
-   &lt;td style="text-align:left;"&gt; F &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 7.175620 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 3.189541 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 7.764503 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 11.815944 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; M &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 10.509583 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 15.796463 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 14.918578 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 25.42652 &lt;/td&gt;
   &lt;/tr&gt;
   &lt;tr&gt;
    &lt;td style="text-align:left;"&gt; A &lt;/td&gt;
    &lt;td style="text-align:left;"&gt; M &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 12.785427 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 17.214575 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 23.837714 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 24.246159 &lt;/td&gt;
-  &lt;/tr&gt;
-  &lt;tr&gt;
-   &lt;td style="text-align:left;"&gt; A &lt;/td&gt;
-   &lt;td style="text-align:left;"&gt; F &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 8.226914 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 7.942043 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 12.037638 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 9.473932 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 19.413696 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 25.082179 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 25.200332 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 30.43139 &lt;/td&gt;
   &lt;/tr&gt;
   &lt;tr&gt;
    &lt;td style="text-align:left;"&gt; A &lt;/td&gt;
    &lt;td style="text-align:left;"&gt; M &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 23.640629 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 20.844094 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 27.734866 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 28.543178 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 12.475157 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 19.262194 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 19.930757 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 20.63809 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; A &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; F &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 1.284895 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 5.251643 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 8.746856 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 10.24585 &lt;/td&gt;
   &lt;/tr&gt;
 &lt;/tbody&gt;
 &lt;/table&gt;
@@ -194,7 +193,7 @@ Let's check what those groups are:
 
 
 ```r
-unique(df$group)
+unique(df$strata)
 ```
 
 ```
@@ -210,7 +209,7 @@ table(df$gender)
 ```
 ## 
 ##   F   M 
-## 200 200
+## 210 190
 ```
 
 ---
@@ -218,18 +217,18 @@ table(df$gender)
 --
 
 ```r
-df %&gt;% select(-c(group, gender)) %&gt;% 
+df %&gt;% select(-c(strata, gender)) %&gt;% 
   summary()
 ```
 
 ```
-##      X2005            X2010            X2015           X2020       
-##  Min.   : 0.000   Min.   : 0.000   Min.   : 0.00   Min.   : 0.000  
-##  1st Qu.: 4.745   1st Qu.: 6.759   1st Qu.: 5.73   1st Qu.: 7.881  
-##  Median : 9.246   Median :10.384   Median :10.13   Median :12.077  
-##  Mean   :10.177   Mean   :11.793   Mean   :11.41   Mean   :13.438  
-##  3rd Qu.:13.219   3rd Qu.:15.726   3rd Qu.:15.27   3rd Qu.:18.482  
-##  Max.   :57.049   Max.   :52.639   Max.   :48.23   Max.   :52.452
+##      X2005            X2010            X2015            X2020       
+##  Min.   : 0.000   Min.   : 0.000   Min.   : 0.000   Min.   : 0.000  
+##  1st Qu.: 5.217   1st Qu.: 6.765   1st Qu.: 6.135   1st Qu.: 7.621  
+##  Median : 9.292   Median :10.592   Median :10.280   Median :12.065  
+##  Mean   : 9.537   Mean   :11.260   Mean   :10.677   Mean   :12.678  
+##  3rd Qu.:12.851   3rd Qu.:15.073   3rd Qu.:14.331   3rd Qu.:17.638  
+##  Max.   :34.977   Max.   :34.707   Max.   :33.236   Max.   :39.052
 ```
 --
 ... Let's break this one down.
@@ -244,7 +243,7 @@ df %&gt;% select(-c(group, gender)) %&gt;%
 
 
 ```r
-df %&gt;% select(-c(group, gender)) %&gt;% 
+df %&gt;% select(-c(strata, gender)) %&gt;% 
   summary()
 ```
 
@@ -259,7 +258,7 @@ in `dplyr`.
 
 
 --
-`df %&gt;% select(-c(group, gender))` is equivalent to &lt;br&gt;`select(df, -c(group, gender))`
+`df %&gt;% select(-c(strata, gender))` is equivalent to &lt;br&gt;`select(df, -c(strata, gender))`
 
 
 --
@@ -271,14 +270,14 @@ argument `y`."
 Using pipes helps to:
   1. chain several commands together,
   2. without creating unnecessarily nested one-liners, e.g. &lt;br&gt;
-  `summary(select(df, -group))`
+  `summary(select(df, -strata))`
 
 ---
 # What's the deal with select?
 
 
 ```r
-df %&gt;% select(-c(group, gender)) %&gt;% 
+df %&gt;% select(-c(strata, gender)) %&gt;% 
   summary()
 ```
 
@@ -287,26 +286,26 @@ tibble.
 
 
 --
-Notice that `group` and `gender` are not in quotes. This is because `dplyr` and
+Notice that `strata` and `gender` are not in quotes. This is because `dplyr` and
 many of the functions in the tidyverse use tidy-evaluation, which allows users
 to reference column names of data.frames and tibbles as if they are variables
 within tidyverse functions.
 
 
 --
-The minus sign is saying that we want to remove group and gender, or
-equivalently to select all of the columns except for group and gender.
+The minus sign is saying that we want to remove strata and gender, or
+equivalently to select all of the columns except for strata and gender.
 
 
 
 ```
-##      X2005            X2010            X2015           X2020       
-##  Min.   : 0.000   Min.   : 0.000   Min.   : 0.00   Min.   : 0.000  
-##  1st Qu.: 4.745   1st Qu.: 6.759   1st Qu.: 5.73   1st Qu.: 7.881  
-##  Median : 9.246   Median :10.384   Median :10.13   Median :12.077  
-##  Mean   :10.177   Mean   :11.793   Mean   :11.41   Mean   :13.438  
-##  3rd Qu.:13.219   3rd Qu.:15.726   3rd Qu.:15.27   3rd Qu.:18.482  
-##  Max.   :57.049   Max.   :52.639   Max.   :48.23   Max.   :52.452
+##      X2005            X2010            X2015            X2020       
+##  Min.   : 0.000   Min.   : 0.000   Min.   : 0.000   Min.   : 0.000  
+##  1st Qu.: 5.217   1st Qu.: 6.765   1st Qu.: 6.135   1st Qu.: 7.621  
+##  Median : 9.292   Median :10.592   Median :10.280   Median :12.065  
+##  Mean   : 9.537   Mean   :11.260   Mean   :10.677   Mean   :12.678  
+##  3rd Qu.:12.851   3rd Qu.:15.073   3rd Qu.:14.331   3rd Qu.:17.638  
+##  Max.   :34.977   Max.   :34.707   Max.   :33.236   Max.   :39.052
 ```
 
 ---
@@ -325,7 +324,7 @@ knitr::kable(head(df,3))
  &lt;thead&gt;
   &lt;tr&gt;
    &lt;th style="text-align:right;"&gt; id &lt;/th&gt;
-   &lt;th style="text-align:left;"&gt; group &lt;/th&gt;
+   &lt;th style="text-align:left;"&gt; strata &lt;/th&gt;
    &lt;th style="text-align:left;"&gt; gender &lt;/th&gt;
    &lt;th style="text-align:right;"&gt; X2005 &lt;/th&gt;
    &lt;th style="text-align:right;"&gt; X2010 &lt;/th&gt;
@@ -337,29 +336,29 @@ knitr::kable(head(df,3))
   &lt;tr&gt;
    &lt;td style="text-align:right;"&gt; 1 &lt;/td&gt;
    &lt;td style="text-align:left;"&gt; A &lt;/td&gt;
-   &lt;td style="text-align:left;"&gt; F &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 7.175620 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 3.189541 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 7.764503 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 11.815944 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; M &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 10.50958 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 15.79646 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 14.91858 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 25.42652 &lt;/td&gt;
   &lt;/tr&gt;
   &lt;tr&gt;
    &lt;td style="text-align:right;"&gt; 2 &lt;/td&gt;
    &lt;td style="text-align:left;"&gt; A &lt;/td&gt;
    &lt;td style="text-align:left;"&gt; M &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 12.785427 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 17.214575 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 23.837714 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 24.246159 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 19.41370 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 25.08218 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 25.20033 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 30.43139 &lt;/td&gt;
   &lt;/tr&gt;
   &lt;tr&gt;
    &lt;td style="text-align:right;"&gt; 3 &lt;/td&gt;
    &lt;td style="text-align:left;"&gt; A &lt;/td&gt;
-   &lt;td style="text-align:left;"&gt; F &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 8.226914 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 7.942043 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 12.037638 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 9.473932 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; M &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 12.47516 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 19.26219 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 19.93076 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 20.63809 &lt;/td&gt;
   &lt;/tr&gt;
 &lt;/tbody&gt;
 &lt;/table&gt;
@@ -388,7 +387,8 @@ helpful functions like `starts_with` or `contains`.
 ```r
 df &lt;- df %&gt;% tidyr::pivot_longer(
   cols = starts_with('X'),
-  names_to = 'year')
+  names_to = 'year',
+  values_to = 'score')
 
 knitr::kable(head(df, 4))
 ```
@@ -397,40 +397,40 @@ knitr::kable(head(df, 4))
  &lt;thead&gt;
   &lt;tr&gt;
    &lt;th style="text-align:right;"&gt; id &lt;/th&gt;
-   &lt;th style="text-align:left;"&gt; group &lt;/th&gt;
+   &lt;th style="text-align:left;"&gt; strata &lt;/th&gt;
    &lt;th style="text-align:left;"&gt; gender &lt;/th&gt;
    &lt;th style="text-align:left;"&gt; year &lt;/th&gt;
-   &lt;th style="text-align:right;"&gt; value &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; score &lt;/th&gt;
   &lt;/tr&gt;
  &lt;/thead&gt;
 &lt;tbody&gt;
   &lt;tr&gt;
    &lt;td style="text-align:right;"&gt; 1 &lt;/td&gt;
    &lt;td style="text-align:left;"&gt; A &lt;/td&gt;
-   &lt;td style="text-align:left;"&gt; F &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; M &lt;/td&gt;
    &lt;td style="text-align:left;"&gt; X2005 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 7.175620 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 10.50958 &lt;/td&gt;
   &lt;/tr&gt;
   &lt;tr&gt;
    &lt;td style="text-align:right;"&gt; 1 &lt;/td&gt;
    &lt;td style="text-align:left;"&gt; A &lt;/td&gt;
-   &lt;td style="text-align:left;"&gt; F &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; M &lt;/td&gt;
    &lt;td style="text-align:left;"&gt; X2010 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 3.189541 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 15.79646 &lt;/td&gt;
   &lt;/tr&gt;
   &lt;tr&gt;
    &lt;td style="text-align:right;"&gt; 1 &lt;/td&gt;
    &lt;td style="text-align:left;"&gt; A &lt;/td&gt;
-   &lt;td style="text-align:left;"&gt; F &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; M &lt;/td&gt;
    &lt;td style="text-align:left;"&gt; X2015 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 7.764503 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 14.91858 &lt;/td&gt;
   &lt;/tr&gt;
   &lt;tr&gt;
    &lt;td style="text-align:right;"&gt; 1 &lt;/td&gt;
    &lt;td style="text-align:left;"&gt; A &lt;/td&gt;
-   &lt;td style="text-align:left;"&gt; F &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; M &lt;/td&gt;
    &lt;td style="text-align:left;"&gt; X2020 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 11.815944 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 25.42652 &lt;/td&gt;
   &lt;/tr&gt;
 &lt;/tbody&gt;
 &lt;/table&gt;
@@ -450,40 +450,40 @@ knitr::kable(head(df, 4))
  &lt;thead&gt;
   &lt;tr&gt;
    &lt;th style="text-align:right;"&gt; id &lt;/th&gt;
-   &lt;th style="text-align:left;"&gt; group &lt;/th&gt;
+   &lt;th style="text-align:left;"&gt; strata &lt;/th&gt;
    &lt;th style="text-align:left;"&gt; gender &lt;/th&gt;
    &lt;th style="text-align:left;"&gt; year &lt;/th&gt;
-   &lt;th style="text-align:right;"&gt; value &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; score &lt;/th&gt;
   &lt;/tr&gt;
  &lt;/thead&gt;
 &lt;tbody&gt;
   &lt;tr&gt;
    &lt;td style="text-align:right;"&gt; 1 &lt;/td&gt;
    &lt;td style="text-align:left;"&gt; A &lt;/td&gt;
-   &lt;td style="text-align:left;"&gt; F &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; M &lt;/td&gt;
    &lt;td style="text-align:left;"&gt; 2005 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 7.175620 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 10.50958 &lt;/td&gt;
   &lt;/tr&gt;
   &lt;tr&gt;
    &lt;td style="text-align:right;"&gt; 1 &lt;/td&gt;
    &lt;td style="text-align:left;"&gt; A &lt;/td&gt;
-   &lt;td style="text-align:left;"&gt; F &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; M &lt;/td&gt;
    &lt;td style="text-align:left;"&gt; 2010 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 3.189541 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 15.79646 &lt;/td&gt;
   &lt;/tr&gt;
   &lt;tr&gt;
    &lt;td style="text-align:right;"&gt; 1 &lt;/td&gt;
    &lt;td style="text-align:left;"&gt; A &lt;/td&gt;
-   &lt;td style="text-align:left;"&gt; F &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; M &lt;/td&gt;
    &lt;td style="text-align:left;"&gt; 2015 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 7.764503 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 14.91858 &lt;/td&gt;
   &lt;/tr&gt;
   &lt;tr&gt;
    &lt;td style="text-align:right;"&gt; 1 &lt;/td&gt;
    &lt;td style="text-align:left;"&gt; A &lt;/td&gt;
-   &lt;td style="text-align:left;"&gt; F &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; M &lt;/td&gt;
    &lt;td style="text-align:left;"&gt; 2020 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 11.815944 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 25.42652 &lt;/td&gt;
   &lt;/tr&gt;
 &lt;/tbody&gt;
 &lt;/table&gt;
@@ -495,7 +495,7 @@ knitr::kable(head(df, 4))
 
 ```r
 ggplot(data = df,  
- aes(x = year, y = value)) + 
+ aes(x = year, y = score)) + 
    geom_point()
 ```
 
@@ -512,7 +512,7 @@ ggplot(data = df,
 
 ```r
 ggplot(data = df,  
- aes(x = year, y = value,
+ aes(x = year, y = score,
 *    group = id)) +
    geom_line()
 ```
@@ -530,9 +530,9 @@ ggplot(data = df,
 
 ```r
 ggplot(data = df,  
- aes(x = year, y = value,
+ aes(x = year, y = score,
      group = id,
-*    color = group)) +
+*    color = strata)) +
 *  geom_line(alpha=0.5)
 ```
 
@@ -548,9 +548,9 @@ ggplot(data = df,
 .tiny[
 
 ```r
-ggplot(data = df,  aes(x = year, y = value, group = id, color = group)) +
+ggplot(data = df,  aes(x = year, y = score, group = id, color = strata)) +
   geom_line(alpha=0.5) + 
-* facet_wrap(~group)
+* facet_wrap(~strata)
 ```
 ]
 
@@ -562,10 +562,10 @@ ggplot(data = df,  aes(x = year, y = value, group = id, color = group)) +
 .tiny[
 
 ```r
-ggplot(data = df,  aes(x = year, y = value, group = id, color = group)) +
+ggplot(data = df,  aes(x = year, y = score, group = id, color = strata)) +
   geom_line(alpha=0.5) + 
-* facet_grid(gender~group) +
-  ggtitle("Different groups had different trajectories")
+* facet_grid(gender~strata) +
+  ggtitle("Different strata had different trajectories")
 ```
 ]
 
@@ -578,13 +578,13 @@ ggplot(data = df,  aes(x = year, y = value, group = id, color = group)) +
 .tiny[
 
 ```r
-ggplot(data = df,  aes(x = year, y = value, group = id, color = gender)) +
+ggplot(data = df,  aes(x = year, y = score, group = id, color = gender)) +
   geom_line(alpha=0.5) + 
-  facet_wrap(~group) + 
-  stat_summary(aes(group = interaction(group, gender)), fun = mean, geom='line', color = 'black') + 
-  stat_summary(aes(group = interaction(group, gender), shape=gender), fun = mean, geom='point', size=2, color = 'black') + 
-  labs(shape = 'Gender and Group\nLevel Average', color = 'Gender') +
-  ggtitle("Men have higher values than women")
+  facet_wrap(~strata) + 
+  stat_summary(aes(group = interaction(strata, gender)), fun = mean, geom='line', color = 'black') + 
+  stat_summary(aes(group = interaction(strata, gender), shape=gender), fun = mean, geom='point', size=2, color = 'black') + 
+  labs(shape = 'Gender and Strata\nLevel Average', color = 'Gender') +
+  ggtitle("Men have higher scores than women")
 ```
 ]
 
@@ -596,12 +596,12 @@ ggplot(data = df,  aes(x = year, y = value, group = id, color = gender)) +
 .tiny[
 
 ```r
-ggplot(data = df,  aes(x = year, y = value, color = gender)) +
+ggplot(data = df,  aes(x = year, y = score, color = gender)) +
   geom_boxplot(alpha=0.5) + 
-  stat_summary(aes(group = interaction(group, gender), shape=''), position = position_dodge(width=0.75), 
+  stat_summary(aes(group = interaction(strata, gender), shape=''), position = position_dodge(width=0.75), 
                fun = mean, geom='point', color = 'grey10', alpha=0.8) +
-  facet_wrap(~group) + 
-  labs(color = "Gender", shape = "Gender + Group\nLevel Average") + 
+  facet_wrap(~strata) + 
+  labs(color = "Gender", shape = "Gender + Strata\nLevel Average") + 
   ggtitle("Men often had greater variance than women")
 ```
 ]
@@ -615,20 +615,20 @@ ggplot(data = df,  aes(x = year, y = value, color = gender)) +
 .tiny[
 
 ```r
-df %&gt;% group_by(group, gender, year) %&gt;%
+df %&gt;% group_by(strata, gender, year) %&gt;%
   summarize(
-    ci_high = quantile(value, 0.975),
-    ci_low = quantile(value, 0.025),
-    mean = mean(value),
+    ci_high = quantile(score, 0.975),
+    ci_low = quantile(score, 0.025),
+    mean = mean(score),
     .groups = 'keep') %&gt;%
   
   ggplot(aes(x = year, y = mean, ymax = ci_high, 
        ymin = ci_low, group = gender, fill = gender)) +
     geom_ribbon(alpha=0.5) +
     geom_line(aes(linetype='')) +
-    facet_wrap(~group) + 
-    labs(linetype = 'Gender+Group\nLevel Average', 
-      fill = 'Gender', y = 'value') + 
+    facet_wrap(~strata) + 
+    labs(linetype = 'Gender+Strata\nLevel Average', 
+      fill = 'Gender', y = 'Score') + 
     ggtitle(paste0("The difference between men and women ",
       "was consistent over time"))
 ```
@@ -645,7 +645,7 @@ to widen the dataframe (similar to how it was originally formatted).
 
 ```r
 df_wide &lt;- df %&gt;% 
-  tidyr::pivot_wider(id_cols = -value, names_from = year, values_from = value)
+  tidyr::pivot_wider(id_cols = -score, names_from = year, values_from = score)
 knitr::kable(head(df_wide, 3))
 ```
 
@@ -653,7 +653,7 @@ knitr::kable(head(df_wide, 3))
  &lt;thead&gt;
   &lt;tr&gt;
    &lt;th style="text-align:right;"&gt; id &lt;/th&gt;
-   &lt;th style="text-align:left;"&gt; group &lt;/th&gt;
+   &lt;th style="text-align:left;"&gt; strata &lt;/th&gt;
    &lt;th style="text-align:left;"&gt; gender &lt;/th&gt;
    &lt;th style="text-align:right;"&gt; 2005 &lt;/th&gt;
    &lt;th style="text-align:right;"&gt; 2010 &lt;/th&gt;
@@ -665,29 +665,29 @@ knitr::kable(head(df_wide, 3))
   &lt;tr&gt;
    &lt;td style="text-align:right;"&gt; 1 &lt;/td&gt;
    &lt;td style="text-align:left;"&gt; A &lt;/td&gt;
-   &lt;td style="text-align:left;"&gt; F &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 7.175620 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 3.189541 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 7.764503 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 11.815944 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; M &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 10.50958 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 15.79646 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 14.91858 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 25.42652 &lt;/td&gt;
   &lt;/tr&gt;
   &lt;tr&gt;
    &lt;td style="text-align:right;"&gt; 2 &lt;/td&gt;
    &lt;td style="text-align:left;"&gt; A &lt;/td&gt;
    &lt;td style="text-align:left;"&gt; M &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 12.785427 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 17.214575 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 23.837714 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 24.246159 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 19.41370 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 25.08218 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 25.20033 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 30.43139 &lt;/td&gt;
   &lt;/tr&gt;
   &lt;tr&gt;
    &lt;td style="text-align:right;"&gt; 3 &lt;/td&gt;
    &lt;td style="text-align:left;"&gt; A &lt;/td&gt;
-   &lt;td style="text-align:left;"&gt; F &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 8.226914 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 7.942043 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 12.037638 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 9.473932 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; M &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 12.47516 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 19.26219 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 19.93076 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 20.63809 &lt;/td&gt;
   &lt;/tr&gt;
 &lt;/tbody&gt;
 &lt;/table&gt;
@@ -700,7 +700,7 @@ knitr::kable(head(df_wide, 3))
 ```r
 # install.packages(GGally)
 library(GGally)
-ggpairs(df_wide, aes(color = group, alpha=0.25), columns = c('2005', '2010', '2015', '2020'), progress=F)
+ggpairs(df_wide, aes(color = strata, alpha=0.25), columns = c('2005', '2010', '2015', '2020'), progress=F)
 ```
 ]
 
@@ -711,9 +711,9 @@ ggpairs(df_wide, aes(color = group, alpha=0.25), columns = c('2005', '2010', '20
 
 
 ```r
-ggbivariate(df, outcome = 'gender', explanatory = 'group') + 
+ggbivariate(df, outcome = 'gender', explanatory = 'strata') + 
   theme(legend.position = 'bottom') + 
-  ggtitle("Groups were about evenly split across gender")
+  ggtitle("Strata were about evenly split across gender")
 ```
 
 &lt;img src="longitudinal_eda_files/figure-html/unnamed-chunk-27-1.png" width="432" height="100%" style="display: block; margin: auto;" /&gt;
@@ -782,10 +782,7 @@ often include the following features: &lt;br&gt; &lt;br&gt;
 &lt;ul&gt;
 &lt;li&gt;R for Data Science: https://www.dataoptimal.com/wp-content/uploads/R-for-Data-Science.jpg &lt;/li&gt;
 &lt;li&gt;Magrittr Logo: https://magrittr.tidyverse.org/logo.png&lt;/li&gt;
-&lt;li&gt;Snowy Boston: https://cdn10.bostonmagazine.com/wp-content/uploads/sites/2/2017/10/winterweather.jpg&lt;/li&gt;
 &lt;li&gt;Tidy Tuesday Logo: https://github.com/rfordatascience/tidytuesday/&lt;/li&gt;
-
-
 &lt;/ul&gt;
   
 &lt;/div&gt;
