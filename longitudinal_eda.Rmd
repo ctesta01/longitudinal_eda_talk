@@ -557,7 +557,7 @@ Join at <https://rug-at-hdsi.org> and check out our [YouTube](https://www.youtub
 
 <https://github.com/ctesta01/longitudinal_eda_talk>
 
-<img src='images/github_repo.png' height='350px' />
+<img src='screenshot.png' height='450px' />
 
 ---
 # Image Credits
