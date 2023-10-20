@@ -553,11 +553,12 @@ often include the following features: <br> <br>
 Join at <https://rug-at-hdsi.org> and check out our [YouTube](https://www.youtube.com/@rusergroupatharvarddatasci7232/videos)
 
 ---
-# Find this talk and the example data on my github
+# Find this talk on my github
 
-<https://github.com/ctesta01/longitudinal_eda_talk>
 
 <img src='screenshot.png' height='450px' />
+<img src='images/github_qr.png' style = 'vertical-align: top;' height='175px' />
+<https://github.com/ctesta01/longitudinal_eda_talk>
 
 ---
 # Image Credits
