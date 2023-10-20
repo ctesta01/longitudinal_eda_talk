@@ -1,9 +1,9 @@
 ---
-title: "Exploratory Data Visualization for Longitudinal Data"
+title: "Exploratory Data Visualization for Time-Series and Longitudinal Data"
 author: "Christian Testa <br>\
   ctesta@hsph.harvard.edu <br>\
-  <a style='color: #55acee;' href='https://twitter.com/_christiantesta'>@_christiantesta</a>"
-date: "October 29 2021"
+  <a style='color: #55acee;' href='https://fediscience.org/@ctesta'>@ctestaa</a>"
+date: "October 21 2022"
 output:
   xaringan::moon_reader:
     lib_dir: libs
@@ -31,17 +31,20 @@ background-size: cover
 ```
 
 
-# Exploratory Data Visualization for Longitudinal Data
+# Exploratory Data Visualization for Time-Series and Longitudinal Data
 
 <div style='font-size: 25px;'>
 
 Christian Testa <br>
 <a href='mailto:ctesta@hsph.harvard.edu'>`r icons::icon_style(icons::fontawesome('envelope'), fill='#F92672')` ctesta@hsph.harvard.edu</a> <br>
-<a style='color: #55acee;' href='https://twitter.com/_christiantesta'>`r icons::icon_style(icons::fontawesome("twitter"), fill='#55acee')` @_christiantesta</a> <br>
+<a style='color: #55acee;' href='https://fediscience.org/@ctesta'>`r icons::icon_style(icons::fontawesome("mastodon"), fill='#55acee')` @ctesta</a> <br>
 <a style='color: #636e72;' href='https://github.com/ctesta01'>`r icons::icon_style(icons::fontawesome("github"), fill='#636e72')` ctesta01</a> <br> <br>
 
-October 29th, 2021
+October 20th, 2023
 </div>
+
+<img src="images/osha_covid.png" alt="Research Figure Showing correlations in COVID and OSHA complaints"/>
+<span style='font-family: Open Sans; font-size: 12px;'>Hanage, W.P., Testa, C., Chen, J.T. et al. [COVID-19: US federal accountability for entry, spread, and inequities—lessons for the future.](https://link.springer.com/article/10.1007/s10654-020-00689-2) Eur J Epidemiol 35, 995–1006 (2020). https://doi.org/10.1007/s10654-020-00689-2</span>
   
 ```{r echo=F, warning=F, message=F}
 # The following code snippet detaches all packages.
@@ -55,20 +58,27 @@ if ('package:tidyverse' %in% search())
 
 ```{r echo=F, warning=F, message=F}
 # some config options
-options(knitr.table.format = "html")
+options(knitr.table.format = "html", cache=TRUE)
 # knitr::opts_chunk$set(cache=T)
 ```
 
 ---
-# A Quote 
+# Motivations
 
-.pull-left[
-"The greatest value of a picture is when it forces us to notice what we never expected to see." –John Tukey
-]
+<span style='font-size: 25px;'>
+> "The greatest value of a picture is when it forces us to notice what we never expected to see." –John Tukey
 
-.pull-right[
-<img src='images/Snowman.jpg' height='400px'>
-]
+--
+
+> "Visualization is often used for evil - twisting insignificant data changes
+and making them look meaningful. Don't do that crap if you want to be my friend.
+Present results clearly and honestly. If something isn't working - those
+reviewing results need to know." —John Tukey
+</span>
+
+--
+
+<img src='images/EleanorLutz.png' height='400px'>
 
 ---
 # Aims
@@ -245,7 +255,7 @@ helpful functions like `starts_with` or `contains`.
 df <- df %>% tidyr::pivot_longer(
   cols = starts_with('X'),
   names_to = 'year',
-  values_to = 'score')
+  values_to = 'rate')
 
 knitr::kable(head(df, 4))
 ```
@@ -266,7 +276,7 @@ knitr::kable(head(df, 4))
 .pull-left[
 ```{r ggplot-point, fig.show='hide'}
 ggplot(data = df,  
- aes(x = year, y = score)) + 
+ aes(x = year, y = rate)) + 
    geom_point()
 ```
 
@@ -283,7 +293,7 @@ ggplot(data = df,
 .pull-left[
 ```{r ggplot-line, fig.show='hide'}
 ggplot(data = df,  
- aes(x = year, y = score,
+ aes(x = year, y = rate,
      group = id)) + #<<
    geom_line()
 ```
@@ -301,7 +311,7 @@ ggplot(data = df,
 .pull-left[
 ```{r ggplot-line+color, fig.show='hide'}
 ggplot(data = df,  
- aes(x = year, y = score,
+ aes(x = year, y = rate,
      group = id,
      color = strata)) + #<<
    geom_line(alpha=0.5) #<<
@@ -319,7 +329,7 @@ ggplot(data = df,
 
 .tiny[
 ```{r ggplot-line+color+facetwrap, fig.show='hide'}
-ggplot(data = df,  aes(x = year, y = score, group = id, color = strata)) +
+ggplot(data = df,  aes(x = year, y = rate, group = id, color = strata)) +
   geom_line(alpha=0.5) + 
   facet_wrap(~strata) #<<
 ```
@@ -333,7 +343,7 @@ ggplot(data = df,  aes(x = year, y = score, group = id, color = strata)) +
 
 .tiny[
 ```{r ggplot-line+color+facetgrid, fig.show='hide'}
-ggplot(data = df,  aes(x = year, y = score, group = id, color = strata)) +
+ggplot(data = df,  aes(x = year, y = rate, group = id, color = strata)) +
   geom_line(alpha=0.5) + 
   facet_grid(gender~strata) + #<<
   ggtitle("Different strata had different trajectories")
@@ -349,13 +359,13 @@ ggplot(data = df,  aes(x = year, y = score, group = id, color = strata)) +
 
 .tiny[
 ```{r ggplot-line+statsum+facetwrap, fig.show='hide'}
-ggplot(data = df,  aes(x = year, y = score, group = id, color = gender)) +
+ggplot(data = df,  aes(x = year, y = rate, group = id, color = gender)) +
   geom_line(alpha=0.5) + 
   facet_wrap(~strata) + 
   stat_summary(aes(group = interaction(strata, gender)), fun = mean, geom='line', color = 'black') + 
   stat_summary(aes(group = interaction(strata, gender), shape=gender), fun = mean, geom='point', size=2, color = 'black') + 
   labs(shape = 'Gender and Strata\nLevel Average', color = 'Gender') +
-  ggtitle("Men have higher scores than women")
+  ggtitle("Men have higher rates than women")
 ```
 ]
 
@@ -367,7 +377,7 @@ ggplot(data = df,  aes(x = year, y = score, group = id, color = gender)) +
 
 .tiny[
 ```{r ggplot-boxplot+statsum, fig.show='hide'}
-ggplot(data = df,  aes(x = year, y = score, color = gender)) +
+ggplot(data = df,  aes(x = year, y = rate, color = gender)) +
   geom_boxplot(alpha=0.5) + 
   stat_summary(aes(group = interaction(strata, gender), shape=''), position = position_dodge(width=0.75), 
                fun = mean, geom='point', color = 'grey10', alpha=0.8) +
@@ -388,25 +398,38 @@ ggplot(data = df,  aes(x = year, y = score, color = gender)) +
 ```{r ggplot-geomribbon, fig.show='hide'}
 df %>% group_by(strata, gender, year) %>%
   summarize(
-    ci_high = quantile(score, 0.975),
-    ci_low = quantile(score, 0.025),
-    mean = mean(score),
+    percentile_97.5 = quantile(rate, 0.975),
+    percentile_2.5 = quantile(rate, 0.025),
+    mean = mean(rate),
     .groups = 'keep') %>%
   
-  ggplot(aes(x = year, y = mean, ymax = ci_high, 
-       ymin = ci_low, group = gender, fill = gender)) +
-    geom_ribbon(alpha=0.5) +
+  ggplot(aes(x = year, y = mean, ymax = percentile_97.5, 
+       ymin = percentile_2.5, group = gender, fill = gender, color = gender)) +
+    geom_ribbon(alpha=0.5, linewidth = 0) +
     geom_line(aes(linetype='')) +
     facet_wrap(~strata) + 
-    labs(linetype = 'Gender+Strata\nLevel Average', 
-      fill = 'Gender', y = 'Score') + 
-    ggtitle(paste0("The difference between men and women ",
-      "was consistent over time"))
+    scale_color_manual(values = c('M' = '#2980b9', 'F' = '#c0392b')) + 
+    labs(linetype = 'Gender+Strata\nLevel Average', fill = 'Gender', color = 'Gender', y = 'Rate') + 
+    ggtitle(paste0("The difference between men and women was consistent over time"))
 ```
 ]
 
 ```{r ref.label = 'ggplot-geomribbon', echo = FALSE, fig.height=4, fig.width=6, out.height='100%', fig.retina = 6, fig.align='center'}
 ```
+
+---
+# Using plotly for interactive graphics
+
+.tiny[
+```{r ggplotly, fig.show='hide', echo=TRUE, message=FALSE, warning=FALSE}
+suppressMessages(library(plotly))
+ggplotly() %>% layout(width = 8, height = 3.5)
+```
+]
+
+```{r ref.label = 'ggplotly', out.width = '100%', echo = FALSE, fig.retina = 6, fig.align='center'}
+```
+
 
 ---
 # Widening Data for Correlation Analysis
@@ -416,9 +439,9 @@ to widen the dataframe (similar to how it was originally formatted).
 
 ```{r warning=F}
 df_wide <- df %>% 
-  tidyr::pivot_wider(id_cols = -score,
+  tidyr::pivot_wider(id_cols = c(id, strata, gender),
                      names_from = year,
-                     values_from = score)
+                     values_from = rate)
 knitr::kable(head(df_wide, 3))
 ```
 
@@ -493,7 +516,41 @@ often include the following features: <br> <br>
 
 .pull-right[
 <img src='images/multilevel-reaction.png'/>
+
+<span style='font-size: 16px;'>
+`library(lme4)` <br>
+`lmer(Reaction ~ Days + (Days|Subject), sleepstudy)`
+</span>
 ]
+
+---
+# Get More Inspiration 
+
+.pull-left[
+* [Georgios Karamanis](https://karaman.is/)
+* [Cedric Scherer](https://cedricscherer.com)
+* [Eleanor Lutz](https://eleanorlutz.com/)
+* [Flowing Data](https://flowingdata.com/)
+<img src="images/Kaashoek.png" alt="A figure showing effectiveness of statewide interventions as an effect modifier" />
+<span style='font-size: 12px;'>Kaashoek J, Testa C, Chen JT, Stolerman LM, Krieger N, Hanage WP, et al. [The evolving roles of US political partisanship and social vulnerability in the COVID-19 pandemic from February 2020–February 2021.](https://journals.plos.org/globalpublichealth/article?id=10.1371/journal.pgph.0000557) PLOS Global Public Health. 2022 
+</span>
+]
+
+.pull-right[
+<img src="images/EscalatingDrought.jpg" height='500px' alt='A figure on drought from Cedric Scherer' />
+]
+
+---
+# Join the R User Group! &nbsp; rug-at-hdsi.org
+
+.pull-left[
+<img src="images/rug.png" alt='screenshot of our RUG YouTube'>
+]
+.pull-right[
+<img src="images/tidymodels.png" style='max-height: 450px;' alt="poster for our upcoming talk on Tidymodels" />
+]
+
+Join at <https://rug-at-hdsi.org> and check out our [YouTube](https://www.youtube.com/@rusergroupatharvarddatasci7232/videos)
 
 ---
 # Find this talk and the example data on my github
@@ -501,8 +558,6 @@ often include the following features: <br> <br>
 <https://github.com/ctesta01/longitudinal_eda_talk>
 
 <img src='images/github_repo.png' height='350px' />
-
-<!-- ![A fit multilevel model of reaction times in a sleep deprivation study](images/multilevel-reaction.png)-->
 
 ---
 # Image Credits
