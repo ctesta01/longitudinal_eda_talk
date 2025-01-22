@@ -3,7 +3,7 @@ title: "Exploratory Data Visualization for Time-Series and Longitudinal Data"
 author: "Christian Testa <br>\
   ctesta@hsph.harvard.edu <br>\
   <a style='color: #55acee;' href='https://fediscience.org/@ctesta'>@ctestaa</a>"
-date: "October 25 2024"
+date: "January 22 2025"
 output:
   xaringan::moon_reader:
     lib_dir: libs
