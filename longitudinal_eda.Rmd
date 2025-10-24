@@ -263,7 +263,8 @@ df |> filter(strata == 'A') |>
 Basically the main differences is that `%>%` uses 
 the `.` notation to refer to the left-hand-side of the pipe, 
 while `|>` uses `_` instead. There are some subtle differences
-in what you can do with the left-hand-side (like `%>%` supports `.$var` 
+in what you can do with the left-hand-side (like `%>%` allows you to use `.`
+inside nested function calls
 while `|>` does not).
 
 In many regards, the two pipes are similar, and you will start to 
@@ -286,7 +287,7 @@ Read more here: <https://www.tidyverse.org/blog/2023/04/base-vs-magrittr-pipe/>
 # Let's convert to a tidy format
 
 ```{r}
-df <- df %>% tidyr::pivot_longer(
+df <- df |> tidyr::pivot_longer(
   cols = starts_with('X'),
   names_to = 'year',
   values_to = 'rate')
@@ -298,7 +299,7 @@ knitr::kable(head(df, 4))
 # Get rid of "X"
 
 ```{r}
-df <- df %>% 
+df <- df |>
   mutate(year = stringr::str_remove(year, "X"))
 
 knitr::kable(head(df, 4))
@@ -430,12 +431,12 @@ ggplot(data = df,  aes(x = year, y = rate, color = gender)) +
 
 .tiny[
 ```{r ggplot-geomribbon, fig.show='hide'}
-df %>% group_by(strata, gender, year) %>%
+df |> group_by(strata, gender, year) |>
   summarize(
     percentile_97.5 = quantile(rate, 0.975),
     percentile_2.5 = quantile(rate, 0.025),
     mean = mean(rate),
-    .groups = 'keep') %>%
+    .groups = 'keep') |>
   
   ggplot(aes(x = year, y = mean, ymax = percentile_97.5, 
        ymin = percentile_2.5, group = gender, fill = gender, color = gender)) +
@@ -457,7 +458,7 @@ df %>% group_by(strata, gender, year) %>%
 .tiny[
 ```{r ggplotly, fig.show='hide', echo=TRUE, message=FALSE, warning=FALSE}
 suppressMessages(library(plotly))
-ggplotly() %>% layout(width = 8, height = 3.5)
+ggplotly() |> layout(width = 8, height = 3.5)
 ```
 ]
 
@@ -472,7 +473,7 @@ Before we can look at correlation across the years, we need
 to widen the dataframe (similar to how it was originally formatted).
 
 ```{r warning=F}
-df_wide <- df %>% 
+df_wide <- df |>
   tidyr::pivot_wider(id_cols = c(id, strata, gender),
                      names_from = year,
                      values_from = rate)
