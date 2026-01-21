@@ -3,7 +3,7 @@ title: "Exploratory Data Visualization for Time-Series and Longitudinal Data"
 author: "Christian Testa <br>\
   ctesta@hsph.harvard.edu <br>\
   <a style='color: #55acee;' href='https://fediscience.org/@ctesta'>@ctestaa</a>"
-date: "October 24, 2025"
+date: ""
 output:
   xaringan::moon_reader:
     lib_dir: libs
@@ -40,7 +40,6 @@ Christian Testa <br>
 <a style='color: #55acee;' href='https://fediscience.org/@ctesta'>`r icons::icon_style(icons::fontawesome("mastodon"), fill='#55acee')` @ctesta</a> <br>
 <a style='color: #636e72;' href='https://github.com/ctesta01'>`r icons::icon_style(icons::fontawesome("github"), fill='#636e72')` ctesta01</a> <br> <br>
 
-October 24, 2025
 </div>
 
 <img src="images/osha_covid.png" alt="Research Figure Showing correlations in COVID and OSHA complaints"/>
